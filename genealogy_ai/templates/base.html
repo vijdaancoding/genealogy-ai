@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,25 +13,25 @@
         <ul>
             <li>
                 <a href="#">
-                    <img src="pictures/logo.png" alt="404">
+                    <img src="{% static 'pictures/logo.png' %}" alt="404">
                     <span class="nav-item">Genealogy AI</span>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i class="fas fa-tree"></i>
+                    <i class="fas fa-tree" style="color: #c0bfbc;"></i>
                     <span class="nav-item">Home</span>
                 </a>
             </li>
            <li>
             <a href="#">
-                <i class="fas fa-message"></i>
+                <i class="fas fa-message" style="color: #c0bfbc;"></i>
                 <span class="nav-item">Chat</span>
             </a>
            </li>
            <li>
             <a href="#">
-                <i class="fa fas-earth-asia"></i>
+                <i class="fa-solid fa-earth-asia" style="color: #c0bfbc;"></i>
                 <span class="nav-item">Geolocation</span>
             </a>
            </li>
