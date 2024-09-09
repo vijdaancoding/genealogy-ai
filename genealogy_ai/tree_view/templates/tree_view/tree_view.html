@@ -1,8 +1,66 @@
 {% extends "base.html"%}
 {% load static %}
 
-{% block content %}
+{% tree view body %}
+
+<svg width="960" height="600"></svg>
+<div id="tree"></div>
+<script type="module">
+
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import {forceSimulation} from "https://cdn.jsdelivr.net/npm/d3-force@3/+esm";
+
+const svg = d3.select("svg");
+const width = +svg.attr("width");
+const height = +svg.attr("height");
+
+const nodes = JSON.parse('{{ nodes_json|safe }}')
+const links = JSON.parse('{{ edges_json|safe }}')
+
+const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.name))
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width /2, height / 2));
+
+const link = svg.append("g")
+    .attr("class", "links")
+    .selectAll("line")
+    .data(links)
+    .enter().append("line")
+    .attr("stroke-width", 1);
+
+const node = svg.append("g")
+    .attr("class", "nodes")
+    .selectAll("g")
+    .data(nodes)
+    .enter().append("g")
+    
+const circles = node.append("circle")
+    .attr("r", 5)
+    .attr("fill", d => d.gender === "male" ? "blue" : "pink");
+
+const labels = node.append("text")
+    .text(d => d.label)
+    .attr('x', 6)
+    .attr('y', 3);
+
+node.append("title")
+    .text(d => d.name);
+
+simulation
+    .on("tick", ticked);
+
+  function ticked() {
+    link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+
+    node
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+  }
+</script>
 
 
-
-{% endblock %}
+{% end tree view body %}

@@ -19,6 +19,6 @@ from django.urls import path, include
 from tree_view import views
 
 urlpatterns = [
+    path('home/', include('tree_view.urls')),
     path('admin/', admin.site.urls), 
-    path('home/', include('tree_view.urls'))
 ]

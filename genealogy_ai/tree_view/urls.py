@@ -19,5 +19,5 @@ from django.urls import path
 from tree_view import views
 
 urlpatterns = [
-    path('treeview/', views.helloWorld)
+    path('treeview/', views.Person)
 ]
