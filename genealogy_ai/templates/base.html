@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width", initial-scale="1.0">
-    <title>Genealogy AI</title>
+    <title>{% block title %}Genealogy AI{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'base_style.css' %}" />
     <script src="https://kit.fontawesome.com/73857aa8bf.js" crossorigin="anonymous"></script>
 </head>
@@ -37,11 +37,11 @@
            </li>
         </ul>
     </nav>
+    <main>
+    {% block content %}
 
-    {% tree view body %}
-
-    {% end tree view body %}
-    
+    {% endblock %}
+    </main>
 </body>
 
 
