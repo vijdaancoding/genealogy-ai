@@ -4,7 +4,6 @@
 {% block title %}Tree View - Genealogy AI{% endblock %}
 
 {% block content %}
-
 <svg width="960" height="600"></svg>
 <div id="tree"></div>
 <script type="module">
@@ -12,24 +11,32 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import {forceSimulation} from "https://cdn.jsdelivr.net/npm/d3-force@3/+esm";
 
-const svg = d3.select("svg");
-const width = +svg.attr("width");
-const height = +svg.attr("height");
+const width = 1500;
+const height = 900;
 
 const nodes = JSON.parse(`{{ nodes|safe }}`);
 const links = JSON.parse(`{{ links|safe }}`)
 
 const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d.name))
+    .force("link", d3.forceLink(links).id(d => d.name).distance(150))
     .force("charge", d3.forceManyBody())
-    .force("center", d3.forceCenter(width /2, height / 2));
+    .force("center", d3.forceCenter(width /2, height / 2))
+    .on("tick", ticked);
+
+const svg = d3.select("svg")
+    .attr('width', width)
+    .attr('height', height)
+    .attr('viewBox', [0, 0, width, height])
+    .attr('style', 'max-width: 100%; height: auto;')
 
 const link = svg.append("g")
-    .attr("class", "links")
-    .selectAll("line")
+    .attr("stroke", "#999")
+    .attr("stroke-opacity", 2)
+    .selectAll()
     .data(links)
-    .enter().append("line")
-    .attr("stroke-width", 1);
+    .join("line")
+        .attr('stroke-width', 1.5);
+
 
 const node = svg.append("g")
     .selectAll("g")
@@ -37,19 +44,24 @@ const node = svg.append("g")
     .enter().append("g")
     
 const circles = node.append("circle")
-    .attr("r", 5)
-    .attr("fill", d => d.gender === "male" ? "blue" : "pink");
+    .attr("r", 8)
+    .attr("fill", "white");
 
 const labels = node.append("text")
     .text(d => d.name)
-    .attr('x', 6)
-    .attr('y', 3);
+    .attr('x', 0)
+    .attr('y', 10)
+    .attr("fill", "white")
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "hanging");
 
 node.append("title")
     .text(d => d.name);
 
-simulation
-    .on("tick", ticked);
+node.call(d3.drag()
+    .on("start", dragstarted)
+    .on('drag', dragged)
+    .on('end', dragend))
 
   function ticked() {
     link
@@ -59,8 +71,27 @@ simulation
         .attr("y2", d => d.target.y);
 
     node
-        .attr("transform", d => `translate(${d.x},${d.y})`);
+        .attr('transform', d => `translate(${d.x},${d.y})`);
+
   }
+
+  function dragstarted(event){
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    event.subject.fx = event.subject.x;
+    event.subject.fy = event.subject.y;
+  }
+
+  function dragged(event) {
+    event.subject.fx = event.x;
+    event.subject.fy = event.y;
+  }
+
+  function dragend(event) {
+    if (!event.active) simulation.alphaTarget(0);
+    event.subject.fx = null;
+    event.subject.fy = null;
+  }
+
 </script>
 
 
