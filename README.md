@@ -25,7 +25,7 @@ git clone https://github.com/vijdaancoding/genealogy-ai.git
 ```
 **2. Installing Requirements** 
 ```
-pip install -r requirements.txt
+pip install -r genealogy_ai/requirements.txt
 ```
 **3. Import Sample Data and Connect to NEO4J**
 ```
