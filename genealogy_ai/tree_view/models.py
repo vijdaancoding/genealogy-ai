@@ -14,7 +14,10 @@ class Person(DjangoNode):
 
     father_of = RelationshipTo('Person', 'FATHER_OF')
     son_of = RelationshipFrom('Person', 'FATHER_OF')
-    #mother_of = RelationshipTo('tree_view.models.Person', 'MOTHER_OF')
+    mother_of = RelationshipTo('Person', 'MOTHER_OF')
+    daughter_of = RelationshipFrom('Person', 'MOTHER_OF')
+    husband_of = RelationshipTo('Person', 'HUSBAND_OF')
+    wife_of = RelationshipFrom('Person', 'WIFE_OF')
 
     class Meta:
         app_label = 'tree_view'
