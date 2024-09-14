@@ -39,6 +39,16 @@ def get_person(request):
                     "source": node.name,
                     "target": child.name
                 })
+            for child in node.mother_of.all():
+                edges.append({
+                    "source": node.name,
+                    "target": child.name
+                })
+            for wife in node.husband_of.all():
+                edges.append({
+                    "source": node.name,
+                    "target": wife.name
+                })
         graph_nodes = [{'name': node.name} for node in nodes]
         graph_edges = edges
 
