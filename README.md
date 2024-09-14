@@ -8,6 +8,7 @@ Revolutionizing the way we document biographies and family lineages. Genealogy A
 
 - ~~Style Family Tree with [D3.js](https://d3js.org/getting-started)~~
 - Set up [Llama 3.1 405B Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-405B-Instruct)
+- Implement CoT and ReAct
 - Use ML Techniques to show geographical timelapse
 - Improve usage of [django neomodel](https://github.com/neo4j-contrib/django-neomodel)
 
