@@ -36,3 +36,6 @@ python manage.py import_data --url bolt://<username>:<password>@localhost:7687
 ```
 python manage.py runserver
 ```
+## Troubleshoot
+
+In case of a WebSocket error caused by NEO4J Desktop please follow the steps mentioned [here](https://neo4j.com/developer/kb/explanation-of-error-websocket-connection-failure/)
